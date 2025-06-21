@@ -53,6 +53,12 @@ public class ShulkerOpenListener implements Listener {
             if (!CONFIG.getBoolean("opening-from-inventory.open-from-enderchest")) return;
         }
 
+        if (
+                event.getView().getTopInventory().getType() != InventoryType.PLAYER &&
+                event.getView().getTopInventory().getType() != InventoryType.SHULKER_BOX &&
+                event.getView().getTopInventory().getType() != InventoryType.ENDER_CHEST)
+            return;
+
         if (event.getView().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
             for (Shulkerbox shulkerbox : Shulkerboxes.getShulkerMap().values()) {
                 if (!shulkerbox.getShulkerInventory().equals(event.getView().getTopInventory())) continue;
