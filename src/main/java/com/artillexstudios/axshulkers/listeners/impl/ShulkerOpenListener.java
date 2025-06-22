@@ -5,6 +5,7 @@ import com.artillexstudios.axshulkers.cache.Shulkerbox;
 import com.artillexstudios.axshulkers.cache.Shulkerboxes;
 import com.artillexstudios.axshulkers.utils.MessageUtils;
 import com.artillexstudios.axshulkers.utils.ShulkerUtils;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,13 @@ public class ShulkerOpenListener implements Listener {
 
     @EventHandler
     public void onInteract(@NotNull PlayerInteractEvent event) {
-        if (event.getAction() == Action.PHYSICAL) return;
+        if (event.getAction() == Action.PHYSICAL) {
+            if (event.getClickedBlock() != null && event.getMaterial() == Material.SHULKER_BOX && event.getClickedBlock().getType() == Material.CAULDRON) {
+                event.setCancelled(true);
+            }
+            return;
+        }
+
         if (ShulkerUtils.hasShulkerOpen(event.getPlayer()) != null && event.getAction() != Action.LEFT_CLICK_AIR) {
             event.getPlayer().closeInventory();
         }
